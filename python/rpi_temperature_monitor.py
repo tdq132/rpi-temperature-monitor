@@ -43,7 +43,7 @@ def check_root():
 def get_rpi_temperature():
     # execute OS command to output the CPU temperature
     logger.debug(f'Running subprocess to extract current temperature')
-    temp = subprocess.Popen(['vcgencmd','measure_temp'],stdout=subprocess.PIPE)
+    temp = subprocess.Popen(['/usr/bin/vcgencmd','measure_temp'],stdout=subprocess.PIPE)
     temp_return = temp.stdout.read().decode("utf-8") 
     logger.debug(f'Command returned value: {temp_return}')
     
