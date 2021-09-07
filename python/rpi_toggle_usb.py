@@ -5,12 +5,14 @@ import argparse
 import logging
 import logging.handlers
 
+
+# User defined variables
 command      = '/usr/sbin/uhubctl'
 location     = '2'
 action_on    = '1'
 action_off   = '0'
 action_cycle = '2'
-log_level    = 'debug'
+log_level    = 'info'
 
 
 def initiate_logging():
@@ -27,22 +29,20 @@ def initiate_logging():
     logger.debug(f'Logging initiated - log level {log_level.upper()}')
 
 
-def get_euid():
+def check_root():
     euid = os.geteuid()
     logger.debug(f'Current euid is {euid}')
 
-    return euid
-
-
-def toggle_usb(action):
-    # Check for root (UID 0)
-    euid = get_euid()
     if euid != 0:
         logger.error(f'euid is {euid}')
         logger.error(f'Script requires euid 0 (root) to execute successfully')
         logger.error(f'Script exiting with status 1')
         exit(1)
-        
+
+    return euid
+
+
+def toggle_usb(action):
     # code the action
     if action == 'enable':
         toggle_cmd = f'{command} --location {location} --action {action_on}'
@@ -58,6 +58,7 @@ def toggle_usb(action):
     logger.info(f'Sent {action} command')
 
 
+
 if __name__ == "__main__":
     initiate_logging()
     logger = logging.getLogger('')
@@ -71,4 +72,5 @@ if __name__ == "__main__":
     args = arg_parser.parse_args()
 
     # Call function
+    check_root()
     toggle_usb(args.action)
