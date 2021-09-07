@@ -1,5 +1,5 @@
 #!/bin/bash
 set -e 
 
-/usr/bin/python3 ../python/rpi_temperature_monitor.py
+/usr/bin/python3 /opt/rpi-temperature-monitor/python/rpi_temperature_monitor.py
 
