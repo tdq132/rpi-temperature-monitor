@@ -15,18 +15,16 @@ action_cycle = '2'
 log_level    = 'info'
 
 
-def initiate_logging():
-    ''' Set up our logger to be used throughout the script.
-    '''
-    logger = logging.getLogger()
-    stream_handler = logging.StreamHandler()
-    formatter = logging.Formatter(
-        '%(asctime)s - %(levelname)5s - %(filename)s-%(funcName)s-%(lineno)04d - %(message)s')
-    stream_handler.setFormatter(formatter)
-    stream_handler.setLevel(log_level.upper())
-    logger.addHandler(stream_handler)
-    logger.setLevel(log_level.upper())
-    logger.debug(f'Logging initiated - log level {log_level.upper()}')
+# Logging initiation
+logger = logging.getLogger()
+stream_handler = logging.StreamHandler()
+formatter = logging.Formatter(
+    '%(asctime)s - %(levelname)5s - %(filename)s-%(funcName)s-%(lineno)04d - %(message)s')
+stream_handler.setFormatter(formatter)
+stream_handler.setLevel(log_level.upper())
+logger.addHandler(stream_handler)
+logger.setLevel(log_level.upper())
+logger.debug(f'Logging initiated - log level {log_level.upper()}')
 
 
 def check_root():
@@ -60,8 +58,6 @@ def toggle_usb(action):
 
 
 if __name__ == "__main__":
-    initiate_logging()
-    logger = logging.getLogger('')
     logger.debug(f'Current PID is {os.getpid()}')
     
     # Parse arguments
@@ -74,3 +70,4 @@ if __name__ == "__main__":
     # Call function
     check_root()
     toggle_usb(args.action)
+

@@ -10,21 +10,19 @@ import rpi_toggle_usb
 
 # User defined variables
 temperature_upper_limit = 50
-log_level = 'info'
+log_level = 'debug'
 
 
-def initiate_logging():
-    ''' Set up our logger to be used throughout the script.
-    '''
-    logger = logging.getLogger()
-    stream_handler = logging.StreamHandler()
-    formatter = logging.Formatter(
-        '%(asctime)s - %(levelname)5s - %(filename)s-%(funcName)s-%(lineno)04d - %(message)s')
-    stream_handler.setFormatter(formatter)
-    stream_handler.setLevel(log_level.upper())
-    logger.addHandler(stream_handler)
-    logger.setLevel(log_level.upper())
-    logger.debug(f'Logging initiated - log level {log_level.upper()}')
+# Logging initiation
+logger = logging.getLogger()
+stream_handler = logging.StreamHandler()
+formatter = logging.Formatter(
+    '%(asctime)s - %(levelname)5s - %(filename)s-%(funcName)s-%(lineno)04d - %(message)s')
+stream_handler.setFormatter(formatter)
+stream_handler.setLevel(log_level.upper())
+logger.addHandler(stream_handler)
+logger.setLevel(log_level.upper())
+logger.debug(f'Logging initiated - log level {log_level.upper()}')
 
 
 def check_root():
@@ -59,19 +57,17 @@ def monitor_temperature():
     temperature = get_rpi_temperature()
     
     logger.debug(f'Current temperature: {temperature}, temperature upper limit: {temperature_upper_limit}')
-    if temperature > temperature_upper_limit:
+    if temperature >= temperature_upper_limit:
         logger.debug('Temperature is above the upper limit. Enabling the USB port power')
-        rpi_toggle_usb('enable')
+        rpi_toggle_usb.toggle_usb('enable')
     elif temperature < temperature_upper_limit:
         logger.debug('Temperature is below the upper limit. Disabling the USB port power')
-        rpi_toggle_usb('disable')
+        rpi_toggle_usb.toggle_usb('disable')
 
 
 
 if __name__ == "__main__":
-    initiate_logging()
-    logger = logging.getLogger('')
-    
+
     check_root()
     monitor_temperature()
 
