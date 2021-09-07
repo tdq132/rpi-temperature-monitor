@@ -67,7 +67,6 @@ def monitor_temperature():
 
 
 if __name__ == "__main__":
-
     check_root()
     monitor_temperature()
 
