@@ -14,17 +14,8 @@ action_off   = '0'
 action_cycle = '2'
 log_level    = 'info'
 
-
-# Logging initiation
-logger = logging.getLogger()
-stream_handler = logging.StreamHandler()
-formatter = logging.Formatter(
-    '%(asctime)s - %(levelname)5s - %(filename)s-%(funcName)s-%(lineno)04d - %(message)s')
-stream_handler.setFormatter(formatter)
-stream_handler.setLevel(log_level.upper())
-logger.addHandler(stream_handler)
-logger.setLevel(log_level.upper())
-logger.debug(f'Logging initiated - log level {log_level.upper()}')
+# inherit logging
+logger = logging.getLogger('rpi_temperature_monitor')
 
 
 def check_root():
@@ -58,6 +49,15 @@ def toggle_usb(action):
 
 
 if __name__ == "__main__":
+    # Logging initiation
+    stream_handler = logging.StreamHandler()
+    formatter = logging.Formatter(
+        '%(asctime)s - %(levelname)5s - %(filename)s-%(funcName)s-%(lineno)04d - %(message)s')
+    stream_handler.setFormatter(formatter)
+    stream_handler.setLevel(log_level.upper())
+    logger.addHandler(stream_handler)
+    logger.setLevel(log_level.upper())
+    logger.debug(f'Logging initiated - log level {log_level.upper()}')
     logger.debug(f'Current PID is {os.getpid()}')
     
     # Parse arguments

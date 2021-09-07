@@ -10,11 +10,11 @@ import rpi_toggle_usb
 
 # User defined variables
 temperature_upper_limit = 50
-log_level = 'debug'
+log_level = 'info'
 
 
 # Logging initiation
-logger = logging.getLogger()
+logger = logging.getLogger('rpi_temperature_monitor')
 stream_handler = logging.StreamHandler()
 formatter = logging.Formatter(
     '%(asctime)s - %(levelname)5s - %(filename)s-%(funcName)s-%(lineno)04d - %(message)s')
